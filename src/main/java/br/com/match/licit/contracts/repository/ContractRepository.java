@@ -18,12 +18,16 @@ public class ContractRepository {
      * @return Uma lista de entidades Contrato.
      */
     public List<ContractPublished> buscarPaginado(int pagina, int tamanhoPagina) {
-        if (pagina < 1) { pagina = 1; }
-        if (tamanhoPagina < 1) { tamanhoPagina = 20; }
+        if (pagina < 1) { pagina = 0; }
+        if (tamanhoPagina < 10) { tamanhoPagina = 10; }
 
-        int pageIndex = pagina - 1;
+//        int pageIndex = pagina - 1;
 
-        return ContractPublished.findAll().page(pageIndex, tamanhoPagina).list();
+        return ContractPublished.findAll().page(pagina, tamanhoPagina).list();
+    }
+
+    public Long buscarTotalContratosPublicados(){
+        return ContractPublished.findAll().count();
     }
 
     public ContractPublished buscarContratoPublicado(String idPncp) {

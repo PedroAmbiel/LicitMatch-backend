@@ -5,6 +5,7 @@ import br.com.match.licit.contracts.dto.ContratoMinimoInformacaoDTO;
 import br.com.match.licit.contracts.entity.ContractClosed;
 import br.com.match.licit.contracts.entity.ContractPublished;
 import br.com.match.licit.contracts.repository.ContractRepository;
+import br.com.match.licit.pncp.dto.RespostaPaginadaDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -17,7 +18,7 @@ public class ContractRN {
     @Inject
     ContractRepository contractRepository;
 
-    public List<ContratoMinimoInformacaoDTO> buscarContratosPaginados(int pagina, int qtdRegistros){
+    public RespostaPaginadaDTO<ContratoMinimoInformacaoDTO> buscarContratosPaginados(int pagina, int qtdRegistros){
        List<ContractPublished> contratos =  contractRepository.buscarPaginado(pagina, qtdRegistros);
        List<ContratoMinimoInformacaoDTO> contratoMinimoInformacaoDTOS = new ArrayList<>();
        for(ContractPublished contrato : contratos){
@@ -25,8 +26,19 @@ public class ContractRN {
 
            contratoMinimoInformacaoDTOS.add(novoContrato);
        }
+       RespostaPaginadaDTO<ContratoMinimoInformacaoDTO> respostaPaginadaDTO = new RespostaPaginadaDTO<>();
 
-       return contratoMinimoInformacaoDTOS;
+       respostaPaginadaDTO.setData(contratoMinimoInformacaoDTOS);
+       respostaPaginadaDTO.setNumeroPagina(pagina);
+
+        respostaPaginadaDTO.setEmpty(true);
+
+       if(!contratoMinimoInformacaoDTOS.isEmpty()){
+           respostaPaginadaDTO.setEmpty(false);
+           respostaPaginadaDTO.setTotalRegistros(contractRepository.buscarTotalContratosPublicados());
+       }
+
+       return respostaPaginadaDTO;
     }
 
     public ContratoDetalhadoInformacaoDTO buscarDetalhesContrato(String idPncp){

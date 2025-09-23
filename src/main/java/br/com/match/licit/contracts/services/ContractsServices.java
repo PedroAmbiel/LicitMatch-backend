@@ -2,6 +2,7 @@ package br.com.match.licit.contracts.services;
 
 import br.com.match.licit.contracts.dto.ContratoMinimoInformacaoDTO;
 import br.com.match.licit.contracts.rn.ContractRN;
+import br.com.match.licit.pncp.dto.RespostaPaginadaDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
@@ -18,7 +19,7 @@ public class ContractsServices implements ContractsImplementation{
 
     @Override
     public Response buscarContratosPublicadosPaginados(Integer qtdRegistros, Integer paginacao) {
-        List<ContratoMinimoInformacaoDTO> contratoMinimo = contractRN.buscarContratosPaginados(paginacao, qtdRegistros);
+        RespostaPaginadaDTO<ContratoMinimoInformacaoDTO> contratoMinimo = contractRN.buscarContratosPaginados(paginacao, qtdRegistros);
 
         return Response.ok().entity(contratoMinimo).build();
     }
