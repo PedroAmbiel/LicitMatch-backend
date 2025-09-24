@@ -23,7 +23,6 @@ public class ContractRN {
        List<ContratoMinimoInformacaoDTO> contratoMinimoInformacaoDTOS = new ArrayList<>();
        for(ContractPublished contrato : contratos){
            ContratoMinimoInformacaoDTO novoContrato = new ContratoMinimoInformacaoDTO(contrato);
-
            contratoMinimoInformacaoDTOS.add(novoContrato);
        }
        RespostaPaginadaDTO<ContratoMinimoInformacaoDTO> respostaPaginadaDTO = new RespostaPaginadaDTO<>();

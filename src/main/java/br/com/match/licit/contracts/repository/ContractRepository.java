@@ -3,8 +3,10 @@ package br.com.match.licit.contracts.repository;
 import br.com.match.licit.contracts.dto.ContratoDetalhadoInformacaoDTO;
 import br.com.match.licit.contracts.entity.ContractClosed;
 import br.com.match.licit.contracts.entity.ContractPublished;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.Comparator;
 import java.util.List;
 
 @ApplicationScoped
@@ -23,7 +25,9 @@ public class ContractRepository {
 
 //        int pageIndex = pagina - 1;
 
-        return ContractPublished.findAll().page(pagina, tamanhoPagina).list();
+        return ContractPublished.findAll(Sort.by("dataPublicacaoPncp", Sort.Direction.Descending))
+                .page(pagina, tamanhoPagina)
+                .list();
     }
 
     public Long buscarTotalContratosPublicados(){
