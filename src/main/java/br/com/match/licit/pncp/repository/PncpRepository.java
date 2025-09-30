@@ -48,6 +48,8 @@ public class PncpRepository {
             if(!contratoPublicadoJaCadastrado(cont.numeroControlePncp)){
                 ContractPublished.persist(contratoEntity);
                 ContractPublished.flush();
+            }else{
+                ContractPublished.getEntityManager().merge(contratoEntity);
             }
         }
     }

@@ -47,7 +47,7 @@ public class Usuario extends PanacheEntityBase {
     @Column(name = "ultimo_login")
     private LocalDateTime ultimoLogin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_empresa")
     private Empresa empresa;
 
