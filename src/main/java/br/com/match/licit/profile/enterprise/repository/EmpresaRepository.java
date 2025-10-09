@@ -34,6 +34,10 @@ public class EmpresaRepository {
 
     @Transactional(rollbackOn = Exception.class)
     public void cadastrarNovaEmpresa(Empresa empresa){
+        empresa.endereco = buscarOuCadastrarNovoEndereco(empresa.endereco);
+
+        Endereco.getEntityManager().refresh(empresa.endereco);
+
         Empresa.persist(empresa);
         Empresa.flush();
     }
@@ -48,6 +52,7 @@ public class EmpresaRepository {
             entidadePersistida = Endereco.find("WHERE cep = :CEP ", Parameters.with("CEP", endereco.cep)).singleResult();
         } catch (NoResultException e) {
             Endereco.persist(endereco);
+            Endereco.flush();
             return endereco;
         }
 

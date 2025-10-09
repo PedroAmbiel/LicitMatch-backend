@@ -45,7 +45,7 @@ public class Empresa extends PanacheEntityBase {
     @Column(name = "situacao_cadastral", length = 50)
     public String situacaoCadastral;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "fk_endereco", referencedColumnName = "id", nullable = false)
     public Endereco endereco;
 

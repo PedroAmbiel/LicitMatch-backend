@@ -30,8 +30,6 @@ public class EmpresaRN {
     public Empresa cadastrarNovaEmpresa(NovaEmpresaResquestDTO novaEmpresaResquestDTO) throws RegraDeNegocioException {
         Empresa novaEmpresa = new Empresa(novaEmpresaResquestDTO);
 
-        novaEmpresa.endereco = empresaRepository.buscarOuCadastrarNovoEndereco(novaEmpresa.endereco);
-
         empresaRepository.cadastrarNovaEmpresa(novaEmpresa);
 
         usuarioRN.vincularUsuarioEmpresa(novaEmpresa, novaEmpresaResquestDTO.getIdUsuarioCriou());

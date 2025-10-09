@@ -43,7 +43,7 @@ public class UsuarioRN {
     private boolean compararSenhaLoginSenhaUsuario(String senhaInformada, String senhaUsuario){
        return BcryptUtil.matches(senhaInformada, senhaUsuario);
     }
-
+    @Transactional
     public void vincularUsuarioEmpresa(Empresa empresa, Long idUSuario) throws RegraDeNegocioException {
         Usuario usuario = usuarioRepository.buscarUsuarioPorId(idUSuario);
         usuario.setEmpresa(empresa);
