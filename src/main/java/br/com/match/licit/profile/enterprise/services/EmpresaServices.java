@@ -1,9 +1,11 @@
 package br.com.match.licit.profile.enterprise.services;
 
+import br.com.match.licit.profile.enterprise.dto.InscricaoEmpresaContratoDTO;
 import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResponseDTO;
 import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResquestDTO;
 import br.com.match.licit.profile.enterprise.entity.Cnae;
 import br.com.match.licit.profile.enterprise.entity.Empresa;
+import br.com.match.licit.profile.enterprise.entity.EmpresaContrato;
 import br.com.match.licit.profile.enterprise.rn.EmpresaRN;
 import br.com.match.licit.utils.exception.RegraDeNegocioException;
 import jakarta.inject.Inject;
@@ -36,5 +38,11 @@ public class EmpresaServices implements EmpresaServicesInterface {
         Empresa empresa = empresaRN.buscarEmpresaPorCodigoSenha(codigo, senha);
 
         return null;
+    }
+
+    @Override
+    public Response efetuarInscricaoContrato(InscricaoEmpresaContratoDTO inscricao) throws RegraDeNegocioException {
+        EmpresaContrato empresaContrato = empresaRN.efetuarInscricaoEmpresaContrato(inscricao);
+        return Response.ok().build();
     }
 }

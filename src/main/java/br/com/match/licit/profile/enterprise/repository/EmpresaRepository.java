@@ -3,11 +3,14 @@ package br.com.match.licit.profile.enterprise.repository;
 import br.com.match.licit.address.entity.Endereco;
 import br.com.match.licit.profile.enterprise.entity.Cnae;
 import br.com.match.licit.profile.enterprise.entity.Empresa;
+import br.com.match.licit.profile.enterprise.entity.EmpresaContrato;
+import br.com.match.licit.utils.exception.RegraDeNegocioException;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.List;
 
@@ -57,6 +60,20 @@ public class EmpresaRepository {
         }
 
         return entidadePersistida;
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public EmpresaContrato salvarEmpresaContrato(EmpresaContrato empresaContrato) throws RegraDeNegocioException {
+        try{
+            Empresa.persist(empresaContrato);
+        }catch(ConstraintViolationException ex){
+            throw new RegraDeNegocioException("Empresa já efetuou a inscrição neste documento");
+        }
+        return empresaContrato;
+    }
+
+    public Empresa findById(Long idEmpresa){
+        return Empresa.findById(idEmpresa);
     }
 
 

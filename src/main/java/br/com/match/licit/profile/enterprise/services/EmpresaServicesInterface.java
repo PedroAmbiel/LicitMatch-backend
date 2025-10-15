@@ -1,5 +1,6 @@
 package br.com.match.licit.profile.enterprise.services;
 
+import br.com.match.licit.profile.enterprise.dto.InscricaoEmpresaContratoDTO;
 import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResquestDTO;
 import br.com.match.licit.profile.user.dto.UserAuthRequestDTO;
 import br.com.match.licit.profile.user.dto.UserNewAccountRequestDTO;
@@ -27,6 +28,10 @@ public interface EmpresaServicesInterface {
     @Path("/buscarempresacodigo")
     Response buscarEmpresaPorCodigoSenha(
             @NotNull @QueryParam("codigo") String codigo, @NotNull @QueryParam("senha") String senha) throws RegraDeNegocioException;
+
+    @POST
+    @Path("/inscricao")
+    public Response efetuarInscricaoContrato(InscricaoEmpresaContratoDTO inscricao) throws RegraDeNegocioException;
 }
 
 

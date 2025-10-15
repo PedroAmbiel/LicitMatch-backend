@@ -50,4 +50,8 @@ public class UsuarioRN {
         usuarioRepository.cadastrarNovoUsuario(usuario);
     }
 
+    public Usuario findById(Long idUsuario){
+       return Usuario.findById(idUsuario);
+    }
+
 }

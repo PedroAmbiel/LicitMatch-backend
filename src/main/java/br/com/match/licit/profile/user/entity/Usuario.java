@@ -36,7 +36,7 @@ public class Usuario extends PanacheEntityBase {
     @Password
     private String senha;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_pessoa")
     private Pessoa pessoa;
 
