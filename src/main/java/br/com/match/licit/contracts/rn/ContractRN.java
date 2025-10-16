@@ -1,9 +1,6 @@
 package br.com.match.licit.contracts.rn;
 
-import br.com.match.licit.contracts.dto.ContratoDetalhadoInformacaoDTO;
-import br.com.match.licit.contracts.dto.ContratoInscritoDetalheInformacaoDTO;
-import br.com.match.licit.contracts.dto.ContratoInscritoMinimoDTO;
-import br.com.match.licit.contracts.dto.ContratoMinimoInformacaoDTO;
+import br.com.match.licit.contracts.dto.*;
 import br.com.match.licit.contracts.entity.ContractClosed;
 import br.com.match.licit.contracts.entity.ContractPublished;
 import br.com.match.licit.contracts.repository.ContractRepository;
@@ -113,6 +110,28 @@ public class ContractRN {
 
             contractRepository.salvarEmpresaContratoRequisitoEmLote(empresaContratoRequisitos);
         }
+    }
+
+
+    public void atualizarConcluidoEmpresaContratoCompleto(Long idEmpresaContratoRequisito, Boolean novoEstado){
+        EmpresaContratoRequisito contratoRequisito = contractRepository.buscarEmpresaContratoRequisitoPorId(idEmpresaContratoRequisito);
+        contratoRequisito.setCompleto(novoEstado);
+        contractRepository.salvarEmpresaContratoRequisito(contratoRequisito);
+    }
+
+    public void salvarNovoEmpresaContratoRequisito(SalvarNovoEmpresaContratoRequisitoDTO novoRequisito){
+        Usuario usuario = usuarioRN.findById(novoRequisito.getIdUsuarioCadastro());
+        EmpresaContrato empresaContrato = contractRepository.buscarEmpresaContratoPorId(novoRequisito.getIdEmpresaContrato());
+
+        EmpresaContratoRequisito novoEmpresaContratoRequisito = new EmpresaContratoRequisito(empresaContrato,
+                novoRequisito.getDescricaoRequisito(), usuario, novoRequisito.getIsCompleto());
+
+        contractRepository.salvarEmpresaContratoRequisito(novoEmpresaContratoRequisito);
+    }
+
+    public void removerEmpresaContratoRequisito(Long idRequisito){
+        EmpresaContratoRequisito contratoRequisito = contractRepository.buscarEmpresaContratoRequisitoPorId(idRequisito);
+        contractRepository.removerEmpresaContratoRequisito(contratoRequisito);
     }
 
 }

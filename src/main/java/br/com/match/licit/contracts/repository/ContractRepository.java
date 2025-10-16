@@ -9,6 +9,7 @@ import io.quarkus.hibernate.orm.panache.Panache;
 import io.quarkus.panache.common.Parameters;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 import java.util.Comparator;
@@ -89,13 +90,20 @@ public class ContractRepository {
     }
 
     public List<EmpresaContratoRequisito> buscarTodosRequisitosEmpresaContrato(EmpresaContrato empresaContrato){
-        return EmpresaContratoRequisito.find("empresaContrato = :EMPRESACONTRATO",
+        return EmpresaContratoRequisito.find("empresaContrato = :EMPRESACONTRATO", Sort.ascending("isCompleto"),
                 Parameters.with("EMPRESACONTRATO", empresaContrato)).list();
+    }
+
+    public EmpresaContratoRequisito buscarEmpresaContratoRequisitoPorId(Long idEmpresaContratoRequisito){
+        return EmpresaContratoRequisito.findById(idEmpresaContratoRequisito);
     }
 
     @Transactional(rollbackOn = Exception.class)
     public void salvarEmpresaContratoRequisito(EmpresaContratoRequisito empresaContratoRequisito){
-        EmpresaContratoRequisito.persist(empresaContratoRequisito);
+        if(empresaContratoRequisito.getId() != null)
+            EmpresaContratoRequisito.getEntityManager().merge(empresaContratoRequisito);
+        else
+            EmpresaContratoRequisito.persist(empresaContratoRequisito);
     }
 
     @Transactional(rollbackOn = Exception.class)
@@ -103,5 +111,9 @@ public class ContractRepository {
         EmpresaContratoRequisito.persist(empresaContratoRequisitos);
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public void removerEmpresaContratoRequisito(EmpresaContratoRequisito empresaContratoRequisito){
+        empresaContratoRequisito.delete();
+    }
 
 }

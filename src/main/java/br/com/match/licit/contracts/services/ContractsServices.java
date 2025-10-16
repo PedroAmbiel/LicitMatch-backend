@@ -2,9 +2,7 @@ package br.com.match.licit.contracts.services;
 
 import br.com.match.licit.contracts.client.AiServicesClient;
 import br.com.match.licit.contracts.client.dto.*;
-import br.com.match.licit.contracts.dto.ContratoInscritoMinimoDTO;
-import br.com.match.licit.contracts.dto.ContratoMinimoInformacaoDTO;
-import br.com.match.licit.contracts.dto.FormDataArquivoRequisitosDTO;
+import br.com.match.licit.contracts.dto.*;
 import br.com.match.licit.contracts.rn.ContractRN;
 import br.com.match.licit.pncp.dto.RespostaPaginadaDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -107,6 +105,25 @@ public class ContractsServices implements ContractsImplementation{
         }
         contractRN.cadastrarRequisitosParaEmpresaContrato(novoRequisito.getIdEmpresaContrato(), requisitos);
 
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response atualizarEstadoEmpresaContratoRequisito(AlterarStatusIsCompletoRequisitoDTO alteracao) {
+        contractRN.atualizarConcluidoEmpresaContratoCompleto(alteracao.getIdEmpresaContratoRequisito(), alteracao.getIsCompleto());
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response salvarNovoEmpresaContratoRequisito(SalvarNovoEmpresaContratoRequisitoDTO novoRequisito) {
+        contractRN.salvarNovoEmpresaContratoRequisito(novoRequisito);
+
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response removerEmpresaContratoRequisito(Long idRequisito) {
+        contractRN.removerEmpresaContratoRequisito(idRequisito);
         return Response.ok().build();
     }
 

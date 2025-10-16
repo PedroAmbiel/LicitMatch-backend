@@ -1,11 +1,11 @@
 package br.com.match.licit.contracts.services;
 
+import br.com.match.licit.contracts.dto.AlterarStatusIsCompletoRequisitoDTO;
 import br.com.match.licit.contracts.dto.FormDataArquivoRequisitosDTO;
+import br.com.match.licit.contracts.dto.SalvarNovoEmpresaContratoRequisitoDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 public interface ContractsImplementation {
@@ -30,4 +30,17 @@ public interface ContractsImplementation {
     @POST
     @Path("/gerarrequisitosarquivo")
     public Response buscarRequisitosEmpresaContratoInscritoPorArquivo(FormDataArquivoRequisitosDTO novoRequisito) throws JsonProcessingException;
+
+    @PUT
+    @Path("/atualizarestadoconcluido")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response atualizarEstadoEmpresaContratoRequisito(AlterarStatusIsCompletoRequisitoDTO alteracao);
+
+    @POST
+    @Path("/salvarnovorequisito")
+    public Response salvarNovoEmpresaContratoRequisito(SalvarNovoEmpresaContratoRequisitoDTO novoRequisito);
+
+    @DELETE
+    @Path("/removerrequisito")
+    public Response removerEmpresaContratoRequisito(@QueryParam("idRequisito") Long idRequisito);
 }
