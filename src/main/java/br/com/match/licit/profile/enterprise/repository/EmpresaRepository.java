@@ -23,8 +23,8 @@ public class EmpresaRepository {
 
     public Empresa buscarEmpresaPorCodigoConvite(String codigoAcesso, String senhaConvite){
         try{
-            return Empresa.find("WHERE codigoConvite = :CODIGO AND senhaConvite = :SENHA",
-                    Parameters.with("CODIGO", codigoAcesso).and("SENHA", BcryptUtil.bcryptHash(senhaConvite)))
+            return Empresa.find("WHERE codigoConvite = :CODIGO",
+                    Parameters.with("CODIGO", codigoAcesso))
                     .singleResult();
         }catch(NoResultException ex){
             return null;

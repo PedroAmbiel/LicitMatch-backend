@@ -2,14 +2,12 @@ package br.com.match.licit.profile.enterprise.services;
 
 import br.com.match.licit.profile.enterprise.dto.InscricaoEmpresaContratoDTO;
 import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResquestDTO;
+import br.com.match.licit.profile.enterprise.dto.VincularUsuarioEmpresaRequestDTO;
 import br.com.match.licit.profile.user.dto.UserAuthRequestDTO;
 import br.com.match.licit.profile.user.dto.UserNewAccountRequestDTO;
 import br.com.match.licit.utils.exception.RegraDeNegocioException;
 import io.smallrye.common.constraint.NotNull;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 public interface EmpresaServicesInterface {
@@ -24,10 +22,15 @@ public interface EmpresaServicesInterface {
     Response cadastrarNovaEmpresa(
             @NotNull NovaEmpresaResquestDTO novaEmpresa) throws RegraDeNegocioException;
 
-    @POST
+    @GET
     @Path("/buscarempresacodigo")
     Response buscarEmpresaPorCodigoSenha(
             @NotNull @QueryParam("codigo") String codigo, @NotNull @QueryParam("senha") String senha) throws RegraDeNegocioException;
+
+    @PUT
+    @Path("/vincularusuarioempresa")
+    Response vincularUsuarioEmpresa(
+            VincularUsuarioEmpresaRequestDTO empresaUsuario) throws RegraDeNegocioException;
 
     @POST
     @Path("/inscricao")

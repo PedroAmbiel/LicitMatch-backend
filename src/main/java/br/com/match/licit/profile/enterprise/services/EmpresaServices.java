@@ -1,8 +1,6 @@
 package br.com.match.licit.profile.enterprise.services;
 
-import br.com.match.licit.profile.enterprise.dto.InscricaoEmpresaContratoDTO;
-import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResponseDTO;
-import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResquestDTO;
+import br.com.match.licit.profile.enterprise.dto.*;
 import br.com.match.licit.profile.enterprise.entity.Cnae;
 import br.com.match.licit.profile.enterprise.entity.Empresa;
 import br.com.match.licit.profile.enterprise.entity.EmpresaContrato;
@@ -36,8 +34,18 @@ public class EmpresaServices implements EmpresaServicesInterface {
     @Override
     public Response buscarEmpresaPorCodigoSenha(String codigo, String senha) throws RegraDeNegocioException {
         Empresa empresa = empresaRN.buscarEmpresaPorCodigoSenha(codigo, senha);
+        if(empresa == null){
+            return Response.ok().entity(null).build();
+        }
+        EmpresaResponseDTO empresaResponseDTO = new EmpresaResponseDTO(empresa);
+        return Response.ok().entity(empresaResponseDTO).build();
+    }
 
-        return null;
+    @Override
+    public Response vincularUsuarioEmpresa(VincularUsuarioEmpresaRequestDTO empresaUsuario) throws RegraDeNegocioException {
+        empresaRN.vincularEmpresaUsuario(empresaUsuario.getIdUsuario(), empresaUsuario.getIdEmpresa());
+
+        return Response.ok().build();
     }
 
     @Override

@@ -43,4 +43,10 @@ public interface ContractsImplementation {
     @DELETE
     @Path("/removerrequisito")
     public Response removerEmpresaContratoRequisito(@QueryParam("idRequisito") Long idRequisito);
+
+    @GET
+    @Path("/buscareditaisdestaque")
+    public Response buscarEditaisEmDestaque(@QueryParam("qtdRegistros") Integer qtdRegistros,
+                                        @QueryParam("paginacao") Integer paginacao, @QueryParam("idEmpresa") Long idEmpresa);
+
 }

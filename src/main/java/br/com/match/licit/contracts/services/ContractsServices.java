@@ -127,5 +127,10 @@ public class ContractsServices implements ContractsImplementation{
         return Response.ok().build();
     }
 
+    @Override
+    public Response buscarEditaisEmDestaque(Integer qtdRegistros, Integer paginacao, Long idEmpresa) {
+        return null;
+    }
+
 
 }

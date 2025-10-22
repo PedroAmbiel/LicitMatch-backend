@@ -9,10 +9,13 @@ import br.com.match.licit.profile.enterprise.entity.Empresa;
 import br.com.match.licit.profile.enterprise.entity.EmpresaContrato;
 import br.com.match.licit.profile.enterprise.repository.EmpresaRepository;
 import br.com.match.licit.profile.user.entity.Usuario;
+import br.com.match.licit.profile.user.repository.UsuarioRepository;
 import br.com.match.licit.profile.user.rn.UsuarioRN;
 import br.com.match.licit.utils.exception.RegraDeNegocioException;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -21,6 +24,8 @@ public class EmpresaRN {
 
     @Inject
     EmpresaRepository empresaRepository;
+    @Inject
+    UsuarioRepository usuarioRepository;
 
     @Inject
     UsuarioRN usuarioRN;
@@ -43,7 +48,23 @@ public class EmpresaRN {
 
     public Empresa buscarEmpresaPorCodigoSenha(String codigoConvite, String senhaConvite){
 
-        return empresaRepository.buscarEmpresaPorCodigoConvite(codigoConvite, senhaConvite);
+        Empresa empresa = empresaRepository.buscarEmpresaPorCodigoConvite(codigoConvite, senhaConvite);
+
+        if(BcryptUtil.matches(senhaConvite, empresa.getSenhaConvite())) {
+            return empresa;
+        }else {
+            return null;
+        }
+    }
+
+    @Transactional
+    public void vincularEmpresaUsuario(Long idUsuario, Long idEmpresa) throws RegraDeNegocioException {
+        Usuario usuario = usuarioRN.findById(idUsuario);
+        Empresa empresa = empresaRepository.findById(idEmpresa);
+
+        usuario.setEmpresa(empresa);
+
+        usuarioRepository.cadastrarNovoUsuario(usuario);
     }
 
     public EmpresaContrato efetuarInscricaoEmpresaContrato(InscricaoEmpresaContratoDTO inscricaoEmpresaContratoDTO) throws RegraDeNegocioException {
