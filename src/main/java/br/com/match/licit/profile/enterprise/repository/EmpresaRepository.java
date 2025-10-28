@@ -4,6 +4,7 @@ import br.com.match.licit.address.entity.Endereco;
 import br.com.match.licit.profile.enterprise.entity.Cnae;
 import br.com.match.licit.profile.enterprise.entity.Empresa;
 import br.com.match.licit.profile.enterprise.entity.EmpresaContrato;
+import br.com.match.licit.profile.enterprise.entity.PerfilAtividadeEmpresa;
 import br.com.match.licit.utils.exception.RegraDeNegocioException;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.panache.common.Parameters;
@@ -74,6 +75,12 @@ public class EmpresaRepository {
 
     public Empresa findById(Long idEmpresa){
         return Empresa.findById(idEmpresa);
+    }
+
+    public PerfilAtividadeEmpresa buscarPalavrasChavePerfilEmpresa(Long idEmpresa){
+        PerfilAtividadeEmpresa perfilEmpresa = PerfilAtividadeEmpresa.find("WHERE empresa.id = :IDEMPRESA",
+                Parameters.with("IDEMPRESA", idEmpresa)).singleResult();
+        return perfilEmpresa;
     }
 
 

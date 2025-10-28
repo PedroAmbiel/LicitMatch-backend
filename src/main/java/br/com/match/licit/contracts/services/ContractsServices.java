@@ -3,6 +3,7 @@ package br.com.match.licit.contracts.services;
 import br.com.match.licit.contracts.client.AiServicesClient;
 import br.com.match.licit.contracts.client.dto.*;
 import br.com.match.licit.contracts.dto.*;
+import br.com.match.licit.contracts.entity.ContractPublished;
 import br.com.match.licit.contracts.rn.ContractRN;
 import br.com.match.licit.pncp.dto.RespostaPaginadaDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -130,6 +131,13 @@ public class ContractsServices implements ContractsImplementation{
     @Override
     public Response buscarEditaisEmDestaque(Integer qtdRegistros, Integer paginacao, Long idEmpresa) {
         return null;
+    }
+
+    @Override
+    public Response buscarDestaqueContratoEmpresa(Long idEmpresa) {
+        List<ContratoMinimoInformacaoDTO> contratos = contractRN.buscarDestaqueEmpresa(idEmpresa);
+
+        return Response.ok().entity(contratos).build();
     }
 
 

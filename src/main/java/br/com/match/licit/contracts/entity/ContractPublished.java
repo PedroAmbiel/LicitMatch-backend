@@ -190,4 +190,6 @@ public class ContractPublished extends PanacheEntityBase {
             this.usuarioNome = contrato.usuarioNome.trim();
 
     }
+
+
 }

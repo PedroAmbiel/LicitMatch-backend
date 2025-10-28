@@ -116,4 +116,18 @@ public class ContractRepository {
         empresaContratoRequisito.delete();
     }
 
+    public List<ContractPublished> buscarTodosContratosExcetoInscritos(Long idEmpresa){
+        String sql = "select * from licitmatch.contrato_publicacao cp" +
+                "   WHERE NOT EXISTS " +
+                "   (SELECT 1 FROM licitmatch.empresa_contrato ec WHERE cp.numero_controle_pncp = ec.fk_contrato_pncp " +
+                "   AND ec.fk_empresa = :idEmpresa) ORDER BY cp.data_publicacao_pncp DESC ";
+
+        List<ContractPublished> results = Panache.getEntityManager()
+                .createNativeQuery(sql, ContractPublished.class)
+                .setParameter("idEmpresa", idEmpresa)
+                .getResultList();
+
+        return results;
+    }
+
 }
