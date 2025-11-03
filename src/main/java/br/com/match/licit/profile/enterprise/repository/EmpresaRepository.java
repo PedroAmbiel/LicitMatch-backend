@@ -77,11 +77,14 @@ public class EmpresaRepository {
         return Empresa.findById(idEmpresa);
     }
 
-    public PerfilAtividadeEmpresa buscarPalavrasChavePerfilEmpresa(Long idEmpresa){
+    public PerfilAtividadeEmpresa buscarPalavrasChavePerfilEmpresa(Long idEmpresa) {
         PerfilAtividadeEmpresa perfilEmpresa = PerfilAtividadeEmpresa.find("WHERE empresa.id = :IDEMPRESA",
                 Parameters.with("IDEMPRESA", idEmpresa)).singleResult();
         return perfilEmpresa;
     }
 
+    public void salvarAtividadePerfilEmpresa(PerfilAtividadeEmpresa atividadeEmpresa){
+        atividadeEmpresa.persist();
+    }
 
 }

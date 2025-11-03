@@ -53,4 +53,32 @@ public class EmpresaServices implements EmpresaServicesInterface {
         EmpresaContrato empresaContrato = empresaRN.efetuarInscricaoEmpresaContrato(inscricao);
         return Response.ok().build();
     }
+
+    @Override
+    public Response buscarIndicadoresDashboard(Long idEmpresa) {
+        IndicadoresDashboardResponseDTO indicadores = empresaRN.buscarIndicadoresDashboard(idEmpresa);
+
+        return Response.ok().entity(indicadores).build();
+    }
+
+    @Override
+    public Response buscarDadosPerfilEmpresa(Long idEmpresa) {
+        PerfilEmpresaDTO perfilEmpresaDTO = empresaRN.buscarPerfilEmpresa(idEmpresa);
+
+        return Response.ok().entity(perfilEmpresaDTO).build();
+    }
+
+    @Override
+    public Response atualizarPalavraChaveEmpresa(NovaPalavraChaveRequestDTO palavraChaveRequestDTO) throws RegraDeNegocioException {
+        empresaRN.atualizarPalavraChave(palavraChaveRequestDTO);
+
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response atualizarEstadosAtuacaoEmpresa(NovoEstadoAtuacaoRequestDTO novoEstadoAtuacaoRequestDTO) throws RegraDeNegocioException {
+        empresaRN.atualizarEstadosAtuacao(novoEstadoAtuacaoRequestDTO);
+
+        return Response.ok().build();
+    }
 }

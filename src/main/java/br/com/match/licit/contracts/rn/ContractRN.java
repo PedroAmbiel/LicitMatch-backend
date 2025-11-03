@@ -203,4 +203,12 @@ public class ContractRN {
 
     private record ContratoComScore(ContractPublished contrato, double score) {}
 
+    public Long buscarTotalEditaisPorSituacao(Long idEmpresa, String situacao){
+        List<ContractPublished> contratos = contractRepository.buscarContratosDaEmpresaPorSituacao(idEmpresa, situacao);
+
+        Integer totalContratos = contratos.size();
+
+        return totalContratos.longValue();
+    }
+
 }

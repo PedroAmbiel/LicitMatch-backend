@@ -1,10 +1,6 @@
 package br.com.match.licit.profile.enterprise.services;
 
-import br.com.match.licit.profile.enterprise.dto.InscricaoEmpresaContratoDTO;
-import br.com.match.licit.profile.enterprise.dto.NovaEmpresaResquestDTO;
-import br.com.match.licit.profile.enterprise.dto.VincularUsuarioEmpresaRequestDTO;
-import br.com.match.licit.profile.user.dto.UserAuthRequestDTO;
-import br.com.match.licit.profile.user.dto.UserNewAccountRequestDTO;
+import br.com.match.licit.profile.enterprise.dto.*;
 import br.com.match.licit.utils.exception.RegraDeNegocioException;
 import io.smallrye.common.constraint.NotNull;
 import jakarta.ws.rs.*;
@@ -35,6 +31,22 @@ public interface EmpresaServicesInterface {
     @POST
     @Path("/inscricao")
     public Response efetuarInscricaoContrato(InscricaoEmpresaContratoDTO inscricao) throws RegraDeNegocioException;
+
+    @GET
+    @Path("/indicadores-dashboard")
+    Response buscarIndicadoresDashboard(@QueryParam("idEmpresa") Long idEmpresa);
+
+    @GET
+    @Path("/perfil-empresa")
+    Response buscarDadosPerfilEmpresa(@QueryParam("idEmpresa") Long idEmpresa);
+
+    @PUT
+    @Path("/atualizar-palavra-chave")
+    Response atualizarPalavraChaveEmpresa(NovaPalavraChaveRequestDTO palavraChaveRequestDTO) throws RegraDeNegocioException;
+
+    @PUT
+    @Path("/atualizar-estados-atuacao")
+    Response atualizarEstadosAtuacaoEmpresa(NovoEstadoAtuacaoRequestDTO novoEstadoAtuacaoRequestDTO) throws RegraDeNegocioException;
 }
 
 
